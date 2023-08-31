@@ -14,6 +14,10 @@ var mngSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
+    role:{
+        type:String,
+        default: 'admin'
+    },
     mobile:{
         type:String,
         required:true,

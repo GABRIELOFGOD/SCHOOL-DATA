@@ -17,9 +17,23 @@ const createdToken = (id) => {
 }
 
 
+// ======== ADMIN HOME GET ========= //
+const adminHome = async (req, res) => {
+    const user = req.user
+    try {
+        if(!user){
+            return res.status(401).json({errors: 'Access Denied'})
+        }
+        res.status(201).json(user)
+    } catch (err) {
+        res.status(401).json({errors: 'Something Went Wrong'})
+    }
+}
+
 // ====== Middleware to Register Admin ===== //
 const regAdmin = async (req, res) => {
     const { name, email, mobile, password } = req.body
+
     try {
 
         // ======= Checking if The name field Is empty ======== //
@@ -89,7 +103,6 @@ const logInAdmin = async (req, res) => {
     catch(err){
 
         // ====== Sending The Catch Errors ===== //
-        // console.log(err)
         res.status(401).json({errors: "Something Went Wrong, If This Error persists, kindly reach out to us through our support team"})
     }
 
@@ -236,4 +249,4 @@ const staffDelete = async (req, res) => {
 }
 
 
-module.exports = { regAdmin, logInAdmin, getStudents, getStaffs, oneStudent, oneStaff, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete }
+module.exports = { adminHome, regAdmin, logInAdmin, getStudents, getStaffs, oneStudent, oneStaff, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete }

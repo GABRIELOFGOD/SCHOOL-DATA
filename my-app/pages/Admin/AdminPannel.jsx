@@ -1,37 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminControl from '../../components/administration/AdminControl'
 import { Link, Outlet } from 'react-router-dom'
 import Footer from '../../components/footer/footer'
 
 function AdminPannel() {
+    const [user, setUser] = useState(null)
+    const [error, setError] = useState(null)
 
-  const panel = [
-    {
-        name: 'students',
-        path: 'all-students'
-    },
-    {
-        name: 'staffs',
-        path: 'all-staffs'
-    },
-    {
-        name: 'register staff',
-        path: 'register/staff'
-    },
-    {
-        name: 'register student',
-        path: 'register/student'
-    },
-    {
-        name: 'staff portal',
-        path: 'create/staff'
-    },
-    {
-        name: 'student portal',
-        path: 'create/student'
-    },
+    const panel = [
+        {
+            name: 'students',
+            path: 'all-students'
+        },
+        {
+            name: 'staffs',
+            path: 'all-staffs'
+        },
+        {
+            name: 'register staff',
+            path: 'register/staff'
+        },
+        {
+            name: 'register student',
+            path: 'register/student'
+        },
+        {
+            name: 'staff portal',
+            path: 'create/staff'
+        },
+        {
+            name: 'student portal',
+            path: 'create/student'
+        },
 
-]
+    ]
+
+    const loader = async () => {
+        const res = await fetch('http://localhost:7722/api/home')
+        const response = await res.json()
+        const user = response.user
+        setUser(user)
+        console.log(user)
+    }
+
+    useEffect(()=> {
+        loader()
+    }, [])
 
 
   return (

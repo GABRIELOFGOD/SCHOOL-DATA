@@ -13,6 +13,10 @@ var stAccSchema = new mongoose.Schema({
         required:[true, 'Email is required'],
         unique:[true, 'This Email is Already Used by Another Student'],
     },
+    role:{
+        type:String,
+        default: 'student'
+    },
     password:{
         type:String,
         required:[true, 'Password Field is Required'],

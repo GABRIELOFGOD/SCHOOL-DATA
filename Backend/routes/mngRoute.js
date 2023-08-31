@@ -2,14 +2,17 @@
 const router = require('express').Router()
 
 // ===== Registering Controllers ===== //
-const { regAdmin, logInAdmin, getStudents, oneStaff, oneStudent, getStaffs, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete } = require('../controller/mngCtrl')
+const { adminHome, regAdmin, logInAdmin, getStudents, oneStaff, oneStudent, getStaffs, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete } = require('../controller/mngCtrl')
 
 // ========== Authentication MiddleWares =========== //
 
 const { forAdmin } = require('../middleware/adminAuth')
+const { currentAdmin } = require('../middleware/adminUserChecker')
+
 // ====== Management Routes ====== //
 
-router.route('/register', forAdmin).post(regAdmin)
+router.route('/home').get(forAdmin, currentAdmin, adminHome)
+router.route('/register').post(forAdmin, currentAdmin, regAdmin)
 router.route('/login').post(logInAdmin)
 router.route('/all-students').get(getStudents)
 router.route('/all-staffs').get(getStaffs)

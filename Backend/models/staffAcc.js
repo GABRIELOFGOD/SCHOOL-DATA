@@ -13,6 +13,10 @@ var staffAccSchema = new mongoose.Schema({
         required:[true, 'Email is required'],
         unique:[true, 'This Email is Already Used by Another Staff'],
     },
+    role:{
+        type:String,
+        default: 'staff'
+    },
     password:{
         type:String,
         required:[true, 'Password Field is Required'],
