@@ -2,7 +2,7 @@
 const router = require('express').Router()
 
 // ===== Registering Controllers ===== //
-const { adminHome, regAdmin, logInAdmin, getStudents, oneStaff, oneStudent, getStaffs, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete } = require('../controller/mngCtrl')
+const { adminLogout, adminHome, regAdmin, logInAdmin, getStudents, oneStaff, oneStudent, getStaffs, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete } = require('../controller/mngCtrl')
 
 // ========== Authentication MiddleWares =========== //
 
@@ -20,6 +20,7 @@ router.route('/students/:id').get(oneStudent).delete(deleteStudent).put(studentU
 router.route('/staffs/:id').get(oneStaff).put(staffUpdate).delete(staffDelete)
 router.route('/not-admitted').get(notAdmitted)
 router.route('/not-employed').get(notEmployed)
+router.route('/logout').get(adminLogout)
 
 
 // ======= Invalid Routes ======= //

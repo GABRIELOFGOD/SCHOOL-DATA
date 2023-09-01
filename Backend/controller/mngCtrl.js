@@ -24,7 +24,9 @@ const adminHome = async (req, res) => {
         if(!user){
             return res.status(401).json({errors: 'Access Denied'})
         }
-        res.status(201).json(user)
+        if(user){
+            return res.status(201).json({user})
+        }
     } catch (err) {
         res.status(401).json({errors: 'Something Went Wrong'})
     }
@@ -248,5 +250,13 @@ const staffDelete = async (req, res) => {
     }
 }
 
+const adminLogout = (req, res) => {
+    try{
+        res.cookie('isAdmin', '', { maxAge: 1 })
+    }catch(err){
+        console.log('error')
+    }
+}
 
-module.exports = { adminHome, regAdmin, logInAdmin, getStudents, getStaffs, oneStudent, oneStaff, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete }
+
+module.exports = { adminLogout, adminHome, regAdmin, logInAdmin, getStudents, getStaffs, oneStudent, oneStaff, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete }

@@ -4,7 +4,9 @@ import { Link, Outlet } from 'react-router-dom'
 import Footer from '../../components/footer/footer'
 
 function AdminPannel() {
-    const [user, setUser] = useState(null)
+    const [userName, setUserName] = useState(null)
+    const [userEmail, setUserEmail] = useState(null)
+    const [userRole, setUserRole] = useState(null)
     const [error, setError] = useState(null)
 
     const panel = [
@@ -35,32 +37,56 @@ function AdminPannel() {
 
     ]
 
-    const loader = async () => {
-        const res = await fetch('http://localhost:7722/api/home')
+    const logout = async () => {
+        const res = await fetch('http://localhost:7722/api/logout', { credentials: 'include' })
+        console.log('res')
         const response = await res.json()
-        const user = response.user
-        setUser(user)
-        console.log(user)
-    }
+        console.log('response')
+        if(!res.ok){
+            alert('not ok')
+        }
 
-    useEffect(()=> {
+        if(res.ok){
+            alert('ok')
+        }
+    }
+      
+    const loader = async () => {
+        const res = await fetch('http://localhost:7722/api/home', { credentials: 'include'})
+        const response = await res.json()
+        const datas = response.user
+
+        if(!res.ok){
+            location.assign('/login') }
+            
+        setUserName(datas.name)
+        setUserEmail(datas.email)
+        setUserRole(datas.role)
+    }
+    
+    useEffect(() => {
         loader()
+    }, [loader])
+
+    useEffect(() => {
+        logout()
     }, [])
 
+    !userName || !userEmail || !userRole && location.assign('/login')
 
   return (
-    <div className=''>
+    userName && <div className=''>
         <div className="flex justify-between shadow-sm max-w-full bg-heroe top-0 z-50 sticky py-3 px-12">
             <div className=" logo w-[50px] "><Link to='/'><img className='w-full' src="/images/logo.png" alt="logo" /></Link></div>
             <h2 className='text-2xl font-extrabold capitalize m-auto'>Welcome To The Administrative Panel</h2>
-            <span className='items-center m-auto rounded-sm text-xs text-white font-bold py-2 px-4 bg-primary'><Link to='/logout'>Logout</Link></span>
+            <span className='items-center m-auto rounded-sm text-xs text-white font-bold py-2 px-4 bg-primary'><button onClick={logout} >Logout</button></span>
         </div>
         <div className="">
             <AdminControl panel={panel} />
             <div className='items-center m-auto'>
                 <div className='m-auto text-center items-center py-6 px-4'>
                     <div className='pb-6'>
-                        <h2 className='text-center text-2xl font-extrabold capitalize'>Welcome Admin Lagbaja For Now</h2>
+                        <h2 className='text-center text-2xl font-extrabold capitalize'>Welcome {userName}</h2>
                         <h4 className='text-md text-center text-heroe font-bold'>Use The Top Navigating Bar To Explore This Panel.</h4>
                     </div>
                     {/* <p className='text-center text-sm pb-3'>Presently, We Have so so Number Of <span className='text-primary font-bold'>students</span></p>
