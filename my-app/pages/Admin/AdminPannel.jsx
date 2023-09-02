@@ -39,15 +39,14 @@ function AdminPannel() {
 
     const logout = async () => {
         const res = await fetch('http://localhost:7722/api/logout', { credentials: 'include' })
-        console.log('res')
         const response = await res.json()
-        console.log('response')
         if(!res.ok){
             alert('not ok')
         }
 
         if(res.ok){
             alert('ok')
+            location.assign('/')
         }
     }
       
@@ -58,7 +57,7 @@ function AdminPannel() {
 
         if(!res.ok){
             location.assign('/login') }
-            
+
         setUserName(datas.name)
         setUserEmail(datas.email)
         setUserRole(datas.role)
@@ -68,10 +67,6 @@ function AdminPannel() {
         loader()
     }, [loader])
 
-    useEffect(() => {
-        logout()
-    }, [])
-
     !userName || !userEmail || !userRole && location.assign('/login')
 
   return (
@@ -79,7 +74,7 @@ function AdminPannel() {
         <div className="flex justify-between shadow-sm max-w-full bg-heroe top-0 z-50 sticky py-3 px-12">
             <div className=" logo w-[50px] "><Link to='/'><img className='w-full' src="/images/logo.png" alt="logo" /></Link></div>
             <h2 className='text-2xl font-extrabold capitalize m-auto'>Welcome To The Administrative Panel</h2>
-            <span className='items-center m-auto rounded-sm text-xs text-white font-bold py-2 px-4 bg-primary'><button onClick={logout} >Logout</button></span>
+            <span className='items-center m-auto rounded-sm text-xs text-white font-bold py-2 px-4 bg-primary'><button onClick={()=>logout()} >Logout</button></span>
         </div>
         <div className="">
             <AdminControl panel={panel} />

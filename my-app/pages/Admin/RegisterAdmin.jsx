@@ -37,7 +37,6 @@ function RegisterAdmin() {
             setPassword('')
             setError(null)
             setAdmin(data.admin)
-            console.log(data.admin)
         }
 
     }

@@ -67,7 +67,7 @@ const regAdmin = async (req, res) => {
 
         // ==== Creating New Admin ==== //
         const newAdmin = await Mngmodel.create({ name, email, mobile, password })
-        res.status(201).json({admin: newAdmin})
+        res.status(201).json({admin: {name, email, mobile} })
     } catch (err) {
         console.log(err)
         res.status(401).json({ errors: 'Unable To Create An Admin Account If This Error Persists, Kindly Reach Our Support Team' })
@@ -252,7 +252,8 @@ const staffDelete = async (req, res) => {
 
 const adminLogout = (req, res) => {
     try{
-        res.cookie('isAdmin', '', { maxAge: 1 })
+        console.log('gotten')
+        res.cookie('isAdmin', ' vvf ', { maxAge: 1 })
     }catch(err){
         console.log('error')
     }

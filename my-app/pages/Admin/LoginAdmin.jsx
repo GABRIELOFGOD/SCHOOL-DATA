@@ -33,6 +33,7 @@ function LoginAdmin() {
             setError(null)
             console.log(data.admin)
             setAdmin(data.admin)
+            location.assign('/admin')
         }
 
     }
