@@ -3,33 +3,34 @@ const StaffReg = require('../models/staffForm')
 const StaffAcc = require('../models/staffAcc')
 const jwt = require('jsonwebtoken')
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 // ======== Handling Errors ======== //
-const handleErrors = err => {
-    console.log(err.message, err.code)
-    let errors = {
-        fname: '',
-        lname: '',
-        email: '',
-        dob: '',
-        stuClass: '',
-        studentId: '',
-        mobile: '',
-        address: '',
-        parent: '',
-        parentOcc: '',
-        parentPhone: '',
-        password: ''
-    }
+// const handleErrors = err => {
+//     console.log(err.message, err.code)
+//     let errors = {
+//         fname: '',
+//         lname: '',
+//         email: '',
+//         dob: '',
+//         stuClass: '',
+//         studentId: '',
+//         mobile: '',
+//         address: '',
+//         parent: '',
+//         parentOcc: '',
+//         parentPhone: '',
+//         password: ''
+//     }
 
-}
+// }
 
 // ====== Reusable Constant ======= //
 const maxAge = 5*24*60*60
 
 // ====== Creating JWT Token ====== //
 const createdToken = id => {
-    jwt.sign({id}, process.env.JWT_TOKEN, { expiresIn: maxAge })
+    jwt.sign({id}, process.env.JWT_STAFF, { expiresIn: '3d' })
 }
 
 
@@ -123,17 +124,31 @@ const createStaff = async (req, res) => {
 
 // ====== Creating Staff Login Controller ======= //
 const staffLogIn = async (req, res) => {
-    const { staffId, password } = req.body
-    try {
-        const staff = await StaffAcc.Login(staffId, password)
+    const {staffId, password} = req.body
 
-        // ===== Generating Token and Sending it with Cookie ===== //
-        const token = await createdToken(staff._id)
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-        res.status(201).json({ staff: staff._id })
-    } catch (err) {
-        console.log(err)
-        res.status(401).json(err)
+    // ======= CONFIRMING INPUTS ======== //
+    if(!staffId, !password){
+        return res.status(401).json({errors: 'All Fields Are required'})
+    }
+
+    // ========= CHECKING IF STUDENTS EXISTS ========= //
+    const finder = await StaffAcc.findOne({staffId})
+    if(finder){
+
+        // ========== COMPARING PASSWORD ========= //
+        const comp = await bcrypt.compare(password, finder.password)
+        if(comp){
+
+            // ======== CREATING AND SENDING TOKEN ======== //
+            const token = createdToken(finder._id)
+            res.cookie('staff', token, { httpOnly: true, maxAge: 1000*60*60*24*3 })
+            res.status(201).json({staff: finder._id})
+        }else{
+            res.status(401).json({errors: 'Invalid Credentials'})
+        }
+    }else{
+        res.status(401).json({errors: 'Invalid Credentials'})
+
     }
 }
 

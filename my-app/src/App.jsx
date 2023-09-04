@@ -23,6 +23,9 @@ import Employed from '../pages/Admin/Employed'
 import Details from '../pages/Details'
 import StaffPortal from '../pages/form-data/StaffPortal'
 import StudentPortal from '../pages/form-data/StudentPortal'
+import Portal from  '../pages/Portal'
+import StaffLogin from '../pages/form-data/StaffLogin'
+import StudentLogin from '../pages/form-data/StudentLogin'
 
 // ======= Importing Loaders ========= //
 import staffLoader from '../pages/Admin/GetStaffs'
@@ -49,6 +52,27 @@ const router = createBrowserRouter ([
             path: 'student',
             element: <StudentForm />
           }
+        ]
+      },
+      {
+        path: 'portal',
+        element: <Portal />,
+        children: [
+          {
+            path: 'staff',
+            element: <StaffPortal />
+          },
+          {
+            path: 'student',
+            element: <StudentPortal />
+          },
+          {
+            path: 'staff-login',
+            element: <StaffLogin />
+          },{
+            path: 'student-login',
+            element: <StudentLogin />
+          },
         ]
       },
       {

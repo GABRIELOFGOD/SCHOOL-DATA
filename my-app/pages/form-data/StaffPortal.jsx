@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useLocation, Link } from 'react-router-dom'
 
 function StaffPortal() {
+  const {pathname} = useLocation()
 
   const [staffId, setStaffId] = useState('')
   const [email, setEmail] = useState('')
@@ -50,6 +52,9 @@ function StaffPortal() {
       setStaffId('')
       setEmail('')
       setPassword('')
+      if(pathname == '/portal/staff'){
+        location.assign('/portal/staff-login')
+      }
     }
 
   }
@@ -73,8 +78,9 @@ function StaffPortal() {
               ))
           }
           </div>
-          <button className='font-extrabold border-0 items-center py-2 my-4 hover:bg-opacity-80 text-white m-auto px-4 rounded-sm transition-all duration-500 bg-primary text-sm active:scale-[.8] '>SUBMIT</button>
           {error && <div className='text-red-900 capitalize text-center text-xs border border-red-900 bg-red-200 py-4 px-8 max-w-full rounded-xs'> {error} </div>}
+          <button className='font-extrabold border-0 items-center w-full py-2 my-4 hover:bg-opacity-80 text-white m-auto px-4 rounded-sm transition-all duration-500 bg-primary text-sm active:scale-[.8] '>SUBMIT</button>
+          {pathname == '/portal/staff' && <p className='text-center font-bold text-xs'>Already Have a Portal? <Link className='text-primary font-extrabold' to='/portal/staff-login'>Longin Now</Link> </p>}
       </form>
     </div>
   )

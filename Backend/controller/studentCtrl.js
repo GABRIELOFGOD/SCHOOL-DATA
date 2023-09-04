@@ -2,28 +2,34 @@
 const StudentReg = require('../models/studentReg')
 const StudentAcc = require('../models/studentAcc')
 const validator = require('validator')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // ======== Handling Errors ======== //
-const handleErrors = err => {
-    console.log(err.message, err.code)
-    let errors = {
-        fname: '',
-        lname: '',
-        email: '',
-        dob: '',
-        stuClass: '',
-        studentId: '',
-        mobile: '',
-        address: '',
-        parent: '',
-        parentOcc: '',
-        parentPhone: '',
-        password: ''
-    }
+// const handleErrors = err => {
+//     console.log(err.message, err.code)
+//     let errors = {
+//         fname: '',
+//         lname: '',
+//         email: '',
+//         dob: '',
+//         stuClass: '',
+//         studentId: '',
+//         mobile: '',
+//         address: '',
+//         parent: '',
+//         parentOcc: '',
+//         parentPhone: '',
+//         password: ''
+//     }
 
-    if (err.code === 11000) {
-        errors.mobile = "This Mobile Number Is Already Been Used by Another Student"
-    }
+//     if (err.code === 11000) {
+//         errors.mobile = "This Mobile Number Is Already Been Used by Another Student"
+//     }
+// }
+
+const createdToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_STUDENT, {expiresIn: '3d'})
 }
 
 // ======= Students Registration Controller ======= //
@@ -101,11 +107,41 @@ const stuCreate = async (req, res) => {
             }
 
         } else {
-            res.status(401).json({errors: 'You are Not A Registered Student'})
+            res.status(401).json({errors: 'You are Not A Student, probably you\'re not admitted or your admission has been councilled'})
         }
     } catch (err) {
         console.log(err)
         res.status(401).json({ errors: 'Somethings When Wrong' })
+    }
+}
+
+// ======= CREATING STUDENT LOGIN CONTROLLER ====== //
+const studentLogin = async (req, res) => {
+    const {studentId, password} = req.body
+
+    // ======= CONFIRMING INPUTS ======== //
+    if(!studentId, !password){
+        return res.status(401).json({errors: 'All Fields Are required'})
+    }
+
+    // ========= CHECKING IF STUDENTS EXISTS ========= //
+    const finder = await StudentAcc.findOne({studentId})
+    if(finder){
+
+        // ========== COMPARING PASSWORD ========= //
+        const comp = await bcrypt.compare(password, finder.password)
+        if(comp){
+
+            // ======== CREATING AND SENDING TOKEN ======== //
+            const token = createdToken(finder._id)
+            res.cookie('student', token, { httpOnly: true, maxAge: 1000*60*60*24*3 })
+            res.status(201).json({student: finder._id})
+        }else{
+            res.status(401).json({errors: 'Invalid Credentials'})
+        }
+    }else{
+        res.status(401).json({errors: 'Invalid Credentials'})
+
     }
 }
 
@@ -117,8 +153,6 @@ const stuCreate = async (req, res) => {
 
 
 
-
-
 // ====== Exporting Controllers ====== //
-module.exports = { regStudent, stuCreate }
+module.exports = { regStudent, stuCreate, studentLogin }
 

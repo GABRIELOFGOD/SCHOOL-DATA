@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const forAdmin = async (req, res, next) => {
-    const {cookie} = req.headers
+    const cookie = req.headers
+    console.log(cookie)
     if(cookie){
         const isAdmin = cookie.split('=')[0]
         const token = cookie.split('=')[1]

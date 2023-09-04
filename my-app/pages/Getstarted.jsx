@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, Link } from 'react-router-dom'
 
 function Getstarted() {
   return (
@@ -12,6 +12,7 @@ function Getstarted() {
       <span className='text-xs font-bold uppercase text-center items-center'><NavLink className=' p-3 rounded-md border border-primary transition-all duration-500 hover:bg-primary hover:text-white' to='student'>Student Application</NavLink></span>
      </div>
       <Outlet />
+      <p className='text-center capitalize font-bold text-xs '>Already Employed or Admitted? <Link className='text-primary font-extrabold' to='/portal'>Go create a portal</Link></p>
     </div>
   )
 }
