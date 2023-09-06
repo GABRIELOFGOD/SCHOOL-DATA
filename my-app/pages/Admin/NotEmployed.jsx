@@ -4,12 +4,21 @@ const URL = 'http://localhost:7722/api/not-employed'
 
 function NotEmployed() {
   const [datas, setDatas] = useState([])
+  const [error, setError] = useState(null)
 
   const getData = async () => {
-    const res = await fetch(URL)
+    const res = await fetch(URL, { credentials: 'include' })
     const response = await res.json()
     const datas = response.staffs
-    setDatas(datas)
+
+    if(!res.ok){
+      setError(response.errors)
+      location.assign('/login')
+    }
+
+    if(res.ok){
+      setDatas(datas)
+    }
   }
 
   useEffect(() => {

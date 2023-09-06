@@ -134,7 +134,7 @@ const studentLogin = async (req, res) => {
 
             // ======== CREATING AND SENDING TOKEN ======== //
             const token = createdToken(finder._id)
-            res.cookie('student', token, { httpOnly: true, maxAge: 1000*60*60*24*3 })
+            res.cookie('schToken', token, { httpOnly: true, maxAge: 1000*60*60*24*3 })
             res.status(201).json({student: finder._id})
         }else{
             res.status(401).json({errors: 'Invalid Credentials'})

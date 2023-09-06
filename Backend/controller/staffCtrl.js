@@ -29,8 +29,8 @@ const bcrypt = require('bcrypt')
 const maxAge = 5*24*60*60
 
 // ====== Creating JWT Token ====== //
-const createdToken = id => {
-    jwt.sign({id}, process.env.JWT_STAFF, { expiresIn: '3d' })
+const createdToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_TOKEN, {expiresIn: '3d'})
 }
 
 
@@ -134,14 +134,14 @@ const staffLogIn = async (req, res) => {
     // ========= CHECKING IF STUDENTS EXISTS ========= //
     const finder = await StaffAcc.findOne({staffId})
     if(finder){
-
+        
         // ========== COMPARING PASSWORD ========= //
         const comp = await bcrypt.compare(password, finder.password)
         if(comp){
 
             // ======== CREATING AND SENDING TOKEN ======== //
             const token = createdToken(finder._id)
-            res.cookie('staff', token, { httpOnly: true, maxAge: 1000*60*60*24*3 })
+            res.cookie('schToken', token, {maxAge: 1000*60*60*24*3, httpOnly:true})
             res.status(201).json({staff: finder._id})
         }else{
             res.status(401).json({errors: 'Invalid Credentials'})

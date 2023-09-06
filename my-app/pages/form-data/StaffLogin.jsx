@@ -36,7 +36,7 @@ const StaffLogin = () => {
 
         if(res.ok){
             setError(null),
-            setStudentId(''),
+            setStaffId(''),
             setPassword('')
 
         }

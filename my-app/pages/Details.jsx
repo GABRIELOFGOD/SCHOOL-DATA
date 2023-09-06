@@ -13,18 +13,34 @@ function Details() {
 
     // ======== Fetching For Students ========= //
     const getDetail = async () => {
-        const details = await fetch('http://localhost:7722/api/students/'+id)
+        const details = await fetch('http://localhost:7722/api/students/'+id, { credentials: 'include' })
         const res = await details.json()
         const result = res.result
-        setResult(result)
+
+        if(!res.ok){
+            setError(res.errors)
+            location.assign('/login')
+          }
+
+          if(res.ok){
+            setResult(result)
+          }
     }
 
     // ======== Fetching For Staffs ========= //
     const getStaffsDetail = async () => {
-        const details = await fetch('http://localhost:7722/api/staffs/'+id)
+        const details = await fetch('http://localhost:7722/api/staffs/'+id, { credentials: 'include' })
         const res = await details.json()
         const staffResult = res.result
-        setStaffResult(staffResult)
+
+        if(!res.ok){
+            setError(res.errors)
+            location.assign('/login')
+          }
+
+          if(res.ok){
+            setStaffResult(staffResult)
+          }
     }
 
     useEffect(() => {
@@ -41,12 +57,14 @@ function Details() {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
         const response = await res.json()
 
         if(!res.ok){
             return setError(response.errors)
+            location.assign('/login')
         }
 
         if(res.ok){
@@ -61,12 +79,14 @@ function Details() {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
         const response = await res.json()
 
         if(!res.ok){
             return setError(response.errors)
+            location.assign('/login')
         }
 
         if(res.ok){
@@ -83,13 +103,15 @@ function Details() {
             body: JSON.stringify({ admitted:false }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
 
         const response = await res.json()
 
         if(!res.ok){
             return setError(response.errors)
+            location.assign('/login')
         }
 
         if(res.ok){
@@ -104,13 +126,15 @@ function Details() {
             body: JSON.stringify({ employed:false }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
 
         const response = await res.json()
 
         if(!res.ok){
             return setError(response.errors)
+            location.assign('/login')
         }
 
         if(res.ok){
@@ -126,13 +150,15 @@ function Details() {
             body: JSON.stringify({ admitted:true }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
 
         const response = await res.json()
 
         if(!res.ok){
             return setError(response.errors)
+            location.assign('/login')
         }
 
         if(res.ok){
@@ -148,12 +174,14 @@ function Details() {
             body: JSON.stringify({ employed: true }),
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         })
         const response = await res.json()
 
         if(!res.ok){
             return setError(response.errors)
+            location.assign('/login')
         }
 
         if(res.ok){

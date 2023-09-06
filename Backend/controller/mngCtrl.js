@@ -92,7 +92,7 @@ const logInAdmin = async (req, res) => {
 
                 // ====== Creating JWT token ======== //
                 const token = createdToken(finder._id)
-                res.cookie('isAdmin', token, {maxAge: 1000*60*60*24*3, httpOnly:true})
+                res.cookie('schToken', token, {maxAge: 1000*60*60*24*3, httpOnly:true})
                 res.status(201).json({admin: finder._id})
             }else{
                 res.status(404).json({errors: 'Invalid Credentials'})
@@ -124,7 +124,7 @@ const getStudents = async (req, res) => {
         })
         res.status(201).json({ students: admit })
     } catch (err) {
-        res.status(401).json({ errors: err })
+        res.status(401).json({ errors: 'something went wrong, please try again later!' })
     }
 }
 
