@@ -29,6 +29,8 @@ import StudentLogin from '../pages/form-data/StudentLogin'
 
 // ======= Importing Loaders ========= //
 import staffLoader from '../pages/Admin/GetStaffs'
+import CreatedStaff from '../pages/Admin/CreatedStaff'
+import CreatedStudent from '../pages/Admin/CreatedStudent'
 
 
 const router = createBrowserRouter ([
@@ -141,6 +143,14 @@ const router = createBrowserRouter ([
         path: 'details/:id',
         element: <Details />
       },
+      {
+        path: 'portal/student',
+        element: <CreatedStudent />
+      },
+      {
+        path: 'portal/staff',
+        element: <CreatedStaff />
+      }
     ]
   },
 ])

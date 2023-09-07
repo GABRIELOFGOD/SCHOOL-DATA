@@ -35,7 +35,8 @@ const adminAccess = (req, res, next) => {
             if(err){
                 res.status(401).json({errors: 'access denied'})
             }else{
-                console.log(decodedToken)
+                req.admin = decodedToken
+                next()
             }
         })
     }else{

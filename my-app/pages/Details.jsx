@@ -17,12 +17,12 @@ function Details() {
         const res = await details.json()
         const result = res.result
 
-        if(!res.ok){
+        if(!details.ok){
             setError(res.errors)
             location.assign('/login')
           }
 
-          if(res.ok){
+          if(details.ok){
             setResult(result)
           }
     }
@@ -33,12 +33,12 @@ function Details() {
         const res = await details.json()
         const staffResult = res.result
 
-        if(!res.ok){
+        if(!details.ok){
             setError(res.errors)
             location.assign('/login')
           }
 
-          if(res.ok){
+          if(details.ok){
             setStaffResult(staffResult)
           }
     }
@@ -52,7 +52,6 @@ function Details() {
     }, [])
     // ========= Deleting Accounts ============ //
     const studentHandleDelete = async () => {
-        alert('Are You Sure You Want to Delete This Student Account')
         const res = await fetch(URL+id, {
             method: 'DELETE',
             headers: {
@@ -63,7 +62,7 @@ function Details() {
         const response = await res.json()
 
         if(!res.ok){
-            return setError(response.errors)
+            setError(response.errors)
             location.assign('/login')
         }
 
@@ -74,7 +73,6 @@ function Details() {
     }
 
     const handleStaffDelete = async () => {
-        alert('Are You Sure You want to Delete This Staff Account?')
         const res = await fetch(delStaffUrl+id, {
             method: 'DELETE',
             headers: {
@@ -85,7 +83,7 @@ function Details() {
         const response = await res.json()
 
         if(!res.ok){
-            return setError(response.errors)
+            setError(response.errors)
             location.assign('/login')
         }
 
@@ -97,7 +95,6 @@ function Details() {
 
     // ========== Account Suspention =========== //
     const studentHandleSuspend = async () => {
-        alert('Are You Sure You want to Suspend This Student?')
         const res = await fetch(URL+id, {
             method: 'PUT',
             body: JSON.stringify({ admitted:false }),
@@ -110,7 +107,7 @@ function Details() {
         const response = await res.json()
 
         if(!res.ok){
-            return setError(response.errors)
+            setError(response.errors)
             location.assign('/login')
         }
 
@@ -133,7 +130,7 @@ function Details() {
         const response = await res.json()
 
         if(!res.ok){
-            return setError(response.errors)
+            setError(response.errors)
             location.assign('/login')
         }
 
@@ -144,7 +141,6 @@ function Details() {
     }
 
     const studentHandleApprove = async () => {
-        alert('Approve Student Admission?')
         const res = await fetch(URL+id, {
             method: 'PUT',
             body: JSON.stringify({ admitted:true }),
@@ -157,7 +153,7 @@ function Details() {
         const response = await res.json()
 
         if(!res.ok){
-            return setError(response.errors)
+            setError(response.errors)
             location.assign('/login')
         }
 
@@ -180,7 +176,7 @@ function Details() {
         const response = await res.json()
 
         if(!res.ok){
-            return setError(response.errors)
+            setError(response.errors)
             location.assign('/login')
         }
 

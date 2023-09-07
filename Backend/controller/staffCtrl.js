@@ -131,6 +131,15 @@ const staffLogIn = async (req, res) => {
         return res.status(401).json({errors: 'All Fields Are required'})
     }
 
+    const stillStaff = await StaffReg.findOne({staffId})
+    if(!stillStaff){
+        return res.status(401).json({errors: 'Sorry, You are not a staff'})
+    }
+
+    if(stillStaff.employed != true){
+        return (res.status(401).json({errors: 'Sorry, You are not a staff'}))
+    }
+
     // ========= CHECKING IF STUDENTS EXISTS ========= //
     const finder = await StaffAcc.findOne({staffId})
     if(finder){

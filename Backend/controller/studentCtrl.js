@@ -124,6 +124,15 @@ const studentLogin = async (req, res) => {
         return res.status(401).json({errors: 'All Fields Are required'})
     }
 
+    const stillStaff = await StudentReg.findOne({studentId})
+    if(!stillStaff){
+        return res.status(401).json({errors: 'Sorry, You are not a student'})
+    }
+
+    if(stillStaff.admitted != true){
+        return (res.status(401).json({errors: 'Sorry, You are not a student'}))
+    }
+
     // ========= CHECKING IF STUDENTS EXISTS ========= //
     const finder = await StudentAcc.findOne({studentId})
     if(finder){

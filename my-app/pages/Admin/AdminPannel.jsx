@@ -34,6 +34,14 @@ function AdminPannel() {
             name: 'student portal',
             path: 'create/student'
         },
+        {
+            name: 'student Acc',
+            path: 'portal/student'
+        },
+        {
+            name: 'staff Acc',
+            path: 'portal/staff'
+        },
 
     ]
 

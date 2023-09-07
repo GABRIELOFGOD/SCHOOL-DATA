@@ -16,5 +16,20 @@ const currentAdmin = async (req, res, next) => {
     }
 }
 
+const naAdmin = async (req, res, next) => {
+    try{
+        const {id} = req.admin
+        const {role, name, email} = await Mngmodel.findById(id)
+        if(role !== 'admin'){
+            return(res.status(401).json({errors: 'Access Denied'}))
+        }
+        req.admin = {role, name, email}
+        next()
+    }
+    catch(err){
+        res.status(401).json({errors: 'something went wrong, try again later'})
+    }
+}
 
-module.exports = {currentAdmin}
+
+module.exports = {currentAdmin, naAdmin}

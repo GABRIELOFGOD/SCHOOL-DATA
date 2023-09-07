@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken')
 const Mngmodel = require("../models/schoolMng");
 const StudentReg = require('../models/studentReg')
 const StaffReg = require('../models/staffForm')
-const validator = require('validator')
+const validator = require('validator');
+const StaffAcc = require('../models/staffAcc');
+const StudentAcc = require('../models/studentAcc')
 
 // ==== Handling Errors ==== //
 
@@ -259,5 +261,29 @@ const adminLogout = (req, res) => {
     }
 }
 
+const staffPortal = async (req, res) => {
+    try{
+        const theStaffs = []
+        const createdStaff = await StaffAcc.find({})
+        
+        res.status(201).json({ staff: createdStaff })
+    }
+    catch(err){
+        res.status(401).json({errors: 'something went wrong try again later'})
+    }
+}
 
-module.exports = { adminLogout, adminHome, regAdmin, logInAdmin, getStudents, getStaffs, oneStudent, oneStaff, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete }
+const studentPortal = async (req, res) => {
+    try{
+        const theStaffs = []
+        const createdStaff = await StudentAcc.find({})
+        
+        res.status(201).json({ staff: createdStaff })
+    }
+    catch(err){
+        res.status(401).json({errors: 'something went wrong try again later'})
+    }
+}
+
+
+module.exports = { adminLogout, adminHome, regAdmin, logInAdmin, getStudents, getStaffs, oneStudent, oneStaff, notAdmitted, notEmployed, deleteStudent, studentUpdate, staffUpdate, staffDelete, staffPortal, studentPortal }
