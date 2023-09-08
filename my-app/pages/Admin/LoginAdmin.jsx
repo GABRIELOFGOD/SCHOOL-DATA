@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function LoginAdmin() {
     
@@ -62,6 +63,7 @@ function LoginAdmin() {
                 </div>
             </div>
             <button className='font-extrabold border-0 flex items-center py-2 my-4 hover:bg-opacity-80 text-white m-auto px-4 rounded-sm transition-all duration-500 bg-primary mx-auto text-sm active:scale-[.8] '>LOGIN</button>
+            <p className='text-xs text-center font-bold'>forgot password? <Link className='text-primary' to='/forgot-password'>click here</Link></p>
             {error && <div className='max-w-full border capitalize text-center border-red-700 py-3 px-6 text-red-700 bg-red-200 text-xs'> {error} </div> }
         </form>
     </div>

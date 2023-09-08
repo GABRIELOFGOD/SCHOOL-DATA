@@ -9,6 +9,10 @@ const { adminLogout, adminHome, regAdmin, logInAdmin, getStudents, oneStaff, one
 const { forAdmin, adminAccess } = require('../middleware/adminAuth')
 const { currentAdmin, naAdmin } = require('../middleware/adminUserChecker')
 
+// =========== UTILS MIDDLEWARES ============ //
+const { adminForgot, putAdminForgot } = require('../utils/forgotPassword')
+const { adminForgotPassword } = require('../utils/sendEmail')
+
 // ====== Management Routes ====== //
 
 router.route('/logout').get(adminLogout)
@@ -23,6 +27,8 @@ router.route('/not-admitted').get(adminAccess, naAdmin, notAdmitted)
 router.route('/not-employed').get(adminAccess, naAdmin, notEmployed)
 router.route('/created-staff').get(staffPortal)
 router.route('/created-student').get(studentPortal)
+router.route('/forgot-email').post(adminForgotPassword)
+router.route('/forgot-password/:id/:token').put(putAdminForgot).get(adminForgot)
 
 
 // ======= Invalid Routes ======= //

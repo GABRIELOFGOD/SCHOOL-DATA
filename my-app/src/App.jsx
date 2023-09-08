@@ -31,6 +31,8 @@ import StudentLogin from '../pages/form-data/StudentLogin'
 import staffLoader from '../pages/Admin/GetStaffs'
 import CreatedStaff from '../pages/Admin/CreatedStaff'
 import CreatedStudent from '../pages/Admin/CreatedStudent'
+import ForgotPassword from '../pages/ForgotPassword'
+import EnterEmail from '../pages/EnterEmail'
 
 
 const router = createBrowserRouter ([
@@ -84,6 +86,14 @@ const router = createBrowserRouter ([
       {
         path: 'login',
         element: <LoginAdmin />
+      },
+      {
+        path: 'forgot-password/:email/:token',
+        element: <ForgotPassword />
+      },
+      {
+        path: 'forgot-password',
+        element: <EnterEmail />
       },
       {
         path:'*',
